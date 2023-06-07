@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+
 import com.example.plantme.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -26,22 +26,21 @@ class Home : Fragment() {
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
 
         binding.add.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
+        binding.tvHomeWelcome.setText("Zatiaľ nemáte žiaden text")
+
+
+
+        return binding.root
+
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
