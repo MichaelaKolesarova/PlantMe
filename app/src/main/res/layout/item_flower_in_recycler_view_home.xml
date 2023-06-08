@@ -4,19 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/roundstyle"
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/picture_flower"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="96dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_local_florist_24" />
+        app:srcCompat="@drawable/repot" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -36,7 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="type"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/picture_flower"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -48,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="info abouit watering"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/picture_flower"
         app:layout_constraintTop_toBottomOf="@+id/tv_type"
@@ -56,13 +58,16 @@
 
     <ImageButton
         android:id="@+id/pictogram_water"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="16dp"
+        android:adjustViewBounds="true"
+        android:padding="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/water"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/water"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
