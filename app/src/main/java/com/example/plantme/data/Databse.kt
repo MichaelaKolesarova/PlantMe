@@ -15,7 +15,7 @@ import com.example.plantme.data.entities.Flower
     version = 1,
 )
 abstract class Databse: RoomDatabase() {
-    abstract fun  createDao(): Dao
+    abstract fun  createDao(): MyDao
 
     companion object {
         @Volatile
