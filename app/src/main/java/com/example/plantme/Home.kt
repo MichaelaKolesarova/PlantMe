@@ -35,6 +35,7 @@ class Home : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.rvFlowers.setOnClickListener {
+
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 

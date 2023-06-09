@@ -10,6 +10,12 @@
         android:name="com.example.plantme.Home"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"

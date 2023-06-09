@@ -13,7 +13,7 @@ import com.example.plantme.databinding.FragmentSecondBinding
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class FlowerOverview : Fragment() {
+class FlowerOverview(name: String) : Fragment() {
 
     private val WATER = 1
     private val FERTILIZE = 2
