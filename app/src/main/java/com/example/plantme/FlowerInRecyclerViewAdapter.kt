@@ -37,7 +37,7 @@ class FlowerInRecyclerViewAdapter (
                 binding.itemInRecyclerView.setOnClickListener {
                     val parameter: String = flowersToShow[position].name
 
-                    val action = FlowerOverviewDirections.actionSecondFragmentToFirstFragment(parameter)
+                    val action = HomeDirections.actionFirstFragmentToSecondFragment(parameter)
 
                     it.findNavController().navigate(action)
                 }

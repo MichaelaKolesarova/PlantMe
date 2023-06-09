@@ -15,5 +15,8 @@ interface MyDao {
     @Query("SELECT * FROM Flower")
     suspend fun getAllFlowers(): List<Flower>
 
+    @Query("SELECT * FROM Flower WHERE name = :pk")
+    suspend fun getSpecificFlower(pk: String): Flower
+
 
 }
