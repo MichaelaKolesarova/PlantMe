@@ -43,24 +43,14 @@ class FlowerOverview() : Fragment() {
             val flower = argumentValue?.let { dao?.getSpecificFlower(it) }!!
             binding.tvName.text = flower.name
             binding.tvType.text = flower.type
-
        }
-
 
         _binding = FragmentFlowerOverviewBinding.inflate(inflater, container, false)
 
         binding.rvActivities.adapter = listOfActivities?.let { ActivityInRecyclerViewAdapter(it) }
         binding.rvActivities.layoutManager = LinearLayoutManager(context)
 
-
-
-
         return binding.root
-
-
-
-
-
 
     }
 

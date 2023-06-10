@@ -38,6 +38,10 @@ class Home : Fragment() {
 
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        binding.add.setOnClickListener {
+
+            findNavController().navigate(R.id.action_Home_to_addNewFlower)
+        }
 
         binding.tvHomeWelcome.setText("Zatiaľ nemáte žiaden text")
 

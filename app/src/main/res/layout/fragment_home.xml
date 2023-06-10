@@ -43,7 +43,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="#FFFFFF"
+        android:background="@null"
         android:minWidth="60dp"
         android:minHeight="60dp"
         android:src="@drawable/ic_add"

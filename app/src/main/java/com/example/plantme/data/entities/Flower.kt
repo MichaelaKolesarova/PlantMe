@@ -1,5 +1,6 @@
 package com.example.plantme.data.entities
 
+import android.graphics.Bitmap
 import android.graphics.Picture
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,7 +11,7 @@ import java.sql.Blob
 data class Flower(
     @PrimaryKey val name: String,
     @ColumnInfo(name = "type") val type: String,
-    @ColumnInfo(name = "picture") val picture: Int,
+    @ColumnInfo(name = "picture", typeAffinity = ColumnInfo.BLOB) val picture: ByteArray?,
     @ColumnInfo(name = "watering_frequency") val watering_frequency: Int,
     @ColumnInfo(name = "fertilize_frequency") val fertilize_frequency: Int,
     @ColumnInfo(name = "repoting_frequency") val repoting_frequency: Int,

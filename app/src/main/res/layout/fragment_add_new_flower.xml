@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FlowerOverview">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/picture_flower"
+            android:layout_width="122dp"
+            android:layout_height="119dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="meno"
+            android:textSize="40sp"
+            app:layout_constraintStart_toEndOf="@+id/picture_flower"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="type"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@+id/picture_flower"
+            app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+
+        <ImageView
+            android:id="@+id/pictogram_water"
+            android:layout_width="85dp"
+            android:layout_height="89dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picture_flower"
+            app:srcCompat="@drawable/water" />
+
+        <TextView
+            android:id="@+id/tv_watering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="frekvencia zalievania (v dňoch)"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_water"
+            app:layout_constraintTop_toTopOf="@+id/pictogram_water" />
+
+        <EditText
+            android:id="@+id/et_watering_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="5"
+            android:inputType="numberDecimal"
+            android:text="5"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_water"
+            app:layout_constraintTop_toBottomOf="@+id/tv_watering" />
+
+
+        <ImageView
+            android:id="@+id/pictogram_fertilize"
+            android:layout_width="85dp"
+            android:layout_height="89dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictogram_water"
+            app:srcCompat="@drawable/fertilise" />
+
+        <TextView
+            android:id="@+id/tv_fertilize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="frekvencia hnojenia (v dňoch)"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_fertilize"
+            app:layout_constraintTop_toTopOf="@+id/pictogram_fertilize" />
+
+        <EditText
+            android:id="@+id/et_fertzilizing_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="30"
+            android:inputType="numberDecimal"
+            android:text="30"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_fertilize"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fertilize" />
+
+
+        <ImageView
+            android:id="@+id/pictogram_repot"
+            android:layout_width="85dp"
+            android:layout_height="89dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictogram_fertilize"
+            app:srcCompat="@drawable/repot" />
+
+        <TextView
+            android:id="@+id/tv_repoting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="frekvencia presádzania (v mesiacoch)"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_repot"
+            app:layout_constraintTop_toTopOf="@+id/pictogram_repot" />
+
+        <EditText
+            android:id="@+id/et_repoting_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="6"
+            android:inputType="numberDecimal"
+            android:text="6"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_repot"
+            app:layout_constraintTop_toBottomOf="@+id/tv_repoting" />
+
+
+        <ImageView
+            android:id="@+id/pictogram_clean"
+            android:layout_width="85dp"
+            android:layout_height="89dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictogram_repot"
+            app:srcCompat="@drawable/clean" />
+
+        <TextView
+            android:id="@+id/tv_cleaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="frekvencia čistenia (v dňoch)"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_clean"
+            app:layout_constraintTop_toTopOf="@+id/pictogram_clean" />
+
+        <EditText
+            android:id="@+id/et_cleaning_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="7"
+            android:inputType="numberDecimal"
+            android:text="7"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/pictogram_clean"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cleaning" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:text="pridať"
+            android:backgroundTint="#065000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictogram_clean" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</ScrollView>
