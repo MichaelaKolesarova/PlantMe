@@ -1,8 +1,12 @@
 package com.example.plantme
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,60 +39,48 @@ class ActivityInRecyclerViewAdapter(
             val dao = parent.context?.let { Databse.getInstance(it).createDao() }
             val binding =  ItemActivityInRecyclerViewOverviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-            when (binding.tvActivity.text) {
-                "Watering" -> {binding.tvInfoAboutActivity.text =
-                    dao?.let { getdaysToDoActivityAgain(it, name, 1).toString() }
-                }
-                "Fertilizing" -> {binding.tvInfoAboutActivity.text =
-                    dao?.let { getdaysToDoActivityAgain(it, name, 2).toString() }
-                }
-                "Repoting" -> {binding.tvInfoAboutActivity.text =
-                    dao?.let { getdaysToDoActivityAgain(it, name, 3).toString() }
-                }
-                "Cleaning" -> {binding.tvInfoAboutActivity.text =
-                    dao?.let { getdaysToDoActivityAgain(it, name, 4).toString() }
-                }}
+            
 
-            binding.pictogram.setOnClickListener {
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS.SSS")
-                val date = LocalDateTime.now().format(formatter)
-                var type = 1
-                when (binding.tvActivity.text) {
-                    "Watering" -> {type = 1 }
-                    "Fertilizing" -> {type = 2 }
-                    "Repoting" -> {type = 3 }
-                    "Cleaning" -> {type = 4 }}
-                val act = CareActivity(date, name, type)
 
-                dao?.let { it1 -> saveActivityInDatabase(it1, act) }
-
-            }
-                //parent.findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             return ActivityInRecyclerViewHolder(binding)
         }
 
         override fun onBindViewHolder(holder: ActivityInRecyclerViewHolder, position: Int) {
+            val dao = holder.itemView.context?.let { Databse.getInstance(it).createDao() }
 
             with(holder)
             {
                 when (activities[position]) {
-                    1 -> {binding.tvActivity.text = "Watering"
-                        binding.pictogram.setImageResource(R.drawable.water) }
-                    2 -> {binding.tvActivity.text = "Fertilizing"
-                        binding.tvInfoAboutActivity.text
-                        binding.pictogram.setImageResource(R.drawable.fertilise)}
-                    3 -> {binding.tvActivity.text = "Repoting"
-
-                        binding.pictogram.setImageResource(R.drawable.repot)}
-                    4 -> {binding.tvActivity.text = "Cleaning"
-
-                        binding.pictogram.setImageResource(R.drawable.clean)}
-                    else -> {binding.tvActivity.text = "Watering"
-
-                        binding.pictogram.setImageResource(R.drawable.water)}
+                    1 -> {binding.tvActivity.text = "Polievanie"
+                        binding.pictogram.setImageResource(R.drawable.water)
+                        dao?.let { getTextForInfo(it,1, binding.tvInfoAboutActivity) }
+                        binding.pictogram.setOnClickListener {
+                            val act = CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), name, 1)
+                            runBlocking {
+                                dao?.insertNewActivity(act)}}}
+                    2 -> {binding.tvActivity.text = "Hnojenie"
+                        binding.pictogram.setImageResource(R.drawable.fertilise)
+                        dao?.let { getTextForInfo(it,2, binding.tvInfoAboutActivity) }
+                        binding.pictogram.setOnClickListener {
+                            val act = CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), name, 2)
+                            runBlocking {
+                                dao?.insertNewActivity(act)}}}
+                    3 -> {binding.tvActivity.text = "Presádzanie"
+                        binding.pictogram.setImageResource(R.drawable.repot)
+                        dao?.let { getTextForInfo(it,3, binding.tvInfoAboutActivity) }
+                        binding.pictogram.setOnClickListener {
+                            val act = CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), name, 3)
+                            runBlocking {
+                                dao?.insertNewActivity(act)}}}
+                    4 -> {binding.tvActivity.text = "Čistenie"
+                        binding.pictogram.setImageResource(R.drawable.clean)
+                        dao?.let { getTextForInfo(it,4, binding.tvInfoAboutActivity) }
+                        binding.pictogram.setOnClickListener {
+                            val act = CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), name, 4)
+                            runBlocking {
+                                dao?.insertNewActivity(act)}}
+                    }
                 }
-
-
             }
 
         }
@@ -105,15 +97,77 @@ class ActivityInRecyclerViewAdapter(
             dao.insertNewActivity(activity)
         }
     }
-
-    private fun getdaysToDoActivityAgain(dao: MyDao, name: String, type: Int): Int
+    
+    private fun getdaysToDoActivityAgain(dao: MyDao, type: Int): Int
     {
+
         return runBlocking {
-            val lastActivity = dao.getSpecificActivities(name, type)[0]
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS.SSS")
-            val activityDate = LocalDateTime.parse(lastActivity.date, formatter)
-            val currentDate = LocalDateTime.now()
-            return@runBlocking ChronoUnit.DAYS.between(currentDate, activityDate).toInt()
+            val acts = dao.getSpecificActivities(name, type)
+            if (acts.isNotEmpty())
+            {
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                val latestActivity = acts.maxBy { it.date }
+                val activityDate = LocalDateTime.parse(latestActivity.date, formatter)
+                val currentDate = LocalDateTime.now()
+                if (activityDate > currentDate)
+                {
+                    return@runBlocking ChronoUnit.DAYS.between(currentDate, activityDate).toInt()
+                } else {
+                    return@runBlocking ChronoUnit.DAYS.between(currentDate, activityDate).toInt().inv()
+                }
+            }
+            else
+            {
+                return@runBlocking 0
+            }
+
+        }
+
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun getTextForInfo(dao: MyDao, type: Int, textView: TextView )
+    {
+
+        runBlocking {
+            var frequency = 1
+            var helpTextBefore = " do ďalšieho "
+            var helpTextAfter = " dní pozadu "
+            var helpTextToday = "o všetko postarné"
+            when (type) {
+                1 -> { frequency = dao.getSpecificFlower(name).cleaning_frequency
+                    helpTextBefore = helpTextBefore + "zalievania"}
+                2 -> { frequency = dao.getSpecificFlower(name).fertilize_frequency
+                    helpTextBefore = helpTextBefore + "hnojenia"}
+                3 -> { frequency = dao.getSpecificFlower(name).repoting_frequency
+                    helpTextBefore = helpTextBefore + "presádzania"}
+                4 -> { frequency = dao.getSpecificFlower(name).cleaning_frequency
+                    helpTextBefore = helpTextBefore + "čistenia"}
+            }
+
+            val daysToActivity = frequency - getdaysToDoActivityAgain(dao, type)
+            if (daysToActivity > 0) {
+                if (daysToActivity == 0){
+                    textView.text = helpTextToday
+                }
+                else if (daysToActivity == 1){
+                    textView.text = daysToActivity.toString()+ " deň" + helpTextBefore
+                } else if (daysToActivity == 2) {
+                    textView.text = daysToActivity.toString() + " dni"+ helpTextBefore
+                } else if (daysToActivity > 0) {
+                    textView.text = daysToActivity.toString() + " dní" + helpTextBefore
+                }
+            } else {
+                if (daysToActivity > -1){
+                    textView.text = daysToActivity.inv().toString() + helpTextAfter
+                }
+                else
+                {
+                    textView.text = daysToActivity.inv().toString() + helpTextAfter
+                }
+                textView.setTextColor(Color.RED)
+            }
+
         }
 
     }

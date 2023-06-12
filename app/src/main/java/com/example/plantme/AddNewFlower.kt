@@ -11,15 +11,19 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.plantme.data.Databse
+import com.example.plantme.data.entities.CareActivity
 import com.example.plantme.data.entities.Flower
 import com.example.plantme.databinding.FragmentAddNewFlowerBinding
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.sql.Blob
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 /**
@@ -56,15 +60,25 @@ class AddNewFlower() : Fragment() {
 
         binding.btnAdd.setOnClickListener {
             lifecycleScope.launch {
-                dao?.insertNewFlower(Flower(binding.etName.text.toString(),binding.etType.text.toString(), imageToStoreInArray, binding.etWateringFrequency.text.toString().toInt(),binding.etFertzilizingFrequency.text.toString().toInt(),binding.etRepotingFrequency.text.toString().toInt(),binding.etCleaningFrequency.text.toString().toInt()))
+                if(dao?.getSpecificFlower(binding.etName.text.toString())  == null)
+                {
+                    dao?.insertNewFlower(Flower(binding.etName.text.toString(),binding.etType.text.toString(), imageToStoreInArray, binding.etWateringFrequency.text.toString().toInt(),binding.etFertzilizingFrequency.text.toString().toInt(),binding.etRepotingFrequency.text.toString().toInt()*30,binding.etCleaningFrequency.text.toString().toInt()))
+                    dao?.insertNewActivity(CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), binding.etName.text.toString(),1))
+                    dao?.insertNewActivity(CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), binding.etName.text.toString(),2))
+                    dao?.insertNewActivity(CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), binding.etName.text.toString(),3))
+                    dao?.insertNewActivity(CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), binding.etName.text.toString(),4))
+                    val parameter: String = binding.etName.text.toString()
+
+                    val action = AddNewFlowerDirections.actionAddNewFlowerToSecondFragment(parameter)
+
+                    it.findNavController().navigate(action)
+                } else {
+                    Toast.makeText(context, "Kvietok so zadaným menom už existuje", Toast.LENGTH_LONG).show()
+                }
+
             }
-            val parameter: String = binding.etName.text.toString()
 
-            val action = AddNewFlowerDirections.actionAddNewFlowerToSecondFragment(parameter)
-
-            it.findNavController().navigate(action)
         }
-
 
         return binding.root
 
