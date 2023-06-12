@@ -1,5 +1,6 @@
 package com.example.plantme
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,12 @@ class FlowerInRecyclerViewAdapter (
                 }
                 binding.tvName.text= flowersToShow[position].name
                 binding.tvType.text= flowersToShow[position].type
+                if (flowersToShow[position].picture != null) {
+                    binding.pictureFlower.setImageBitmap(flowersToShow[position].picture?.let { BitmapFactory.decodeByteArray(flowersToShow[position].picture, 0, it.size) })
+                } else
+                {
+                    binding.pictureFlower.setImageResource(R.drawable.ic_baseline_local_florist_24)
+                }
 
 
 

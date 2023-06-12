@@ -25,7 +25,7 @@ abstract class Databse: RoomDatabase() {
             synchronized(this) {
                 return INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext, Databse::class.java,"Database.db")
-                    .createFromAsset("database.db").build()
+                    .createFromAsset("Database.db").build()
                     .also { INSTANCE = it}
             }
         }

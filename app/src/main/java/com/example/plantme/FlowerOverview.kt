@@ -1,5 +1,6 @@
 package com.example.plantme
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,6 +27,8 @@ class FlowerOverview() : Fragment() {
     private val REPOT = 3
     private val CLEAN = 4
 
+
+
     private var _binding: FragmentFlowerOverviewBinding? = null
 
     // This property is only valid between onCreateView and
@@ -41,14 +44,22 @@ class FlowerOverview() : Fragment() {
 
         lifecycleScope.launch {
             val flower = argumentValue?.let { dao?.getSpecificFlower(it) }!!
+
             binding.tvName.text = flower.name
             binding.tvType.text = flower.type
+            if (flower.picture != null) {
+                binding.pictureFlower.setImageBitmap(flower.picture?.let { BitmapFactory.decodeByteArray(flower.picture, 0, it.size) })
+            } else
+            {
+                binding.pictureFlower.setImageResource(R.drawable.ic_baseline_local_florist_24)
+            }
+            binding.rvActivities.adapter = listOfActivities?.let { ActivityInRecyclerViewAdapter(it, flower.name) }
+            binding.rvActivities.layoutManager = LinearLayoutManager(context)
        }
 
         _binding = FragmentFlowerOverviewBinding.inflate(inflater, container, false)
 
-        binding.rvActivities.adapter = listOfActivities?.let { ActivityInRecyclerViewAdapter(it) }
-        binding.rvActivities.layoutManager = LinearLayoutManager(context)
+
 
         return binding.root
 
@@ -63,4 +74,7 @@ class FlowerOverview() : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }

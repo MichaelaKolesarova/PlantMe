@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -32,8 +33,8 @@ class AddNewFlower() : Fragment() {
     private val CLEAN = 4
 
     private val IMAGE_REQUEST_CODE = 8242008
-    private val KEY_IMAGE_DATA = "image_data"
-    var image:ByteArray? = null
+    private var imagePath: Uri? = null
+    var imageToStoreInArray :ByteArray? = null
 
 
     private var _binding: FragmentAddNewFlowerBinding? = null
@@ -55,7 +56,7 @@ class AddNewFlower() : Fragment() {
 
         binding.btnAdd.setOnClickListener {
             lifecycleScope.launch {
-                dao?.insertNewFlower(Flower(binding.etName.text.toString(),binding.etType.text.toString(), image, binding.etWateringFrequency.text.toString().toInt(),binding.etFertzilizingFrequency.text.toString().toInt(),binding.etRepotingFrequency.text.toString().toInt(),binding.etCleaningFrequency.text.toString().toInt()))
+                dao?.insertNewFlower(Flower(binding.etName.text.toString(),binding.etType.text.toString(), imageToStoreInArray, binding.etWateringFrequency.text.toString().toInt(),binding.etFertzilizingFrequency.text.toString().toInt(),binding.etRepotingFrequency.text.toString().toInt(),binding.etCleaningFrequency.text.toString().toInt()))
             }
             val parameter: String = binding.etName.text.toString()
 
@@ -75,13 +76,13 @@ class AddNewFlower() : Fragment() {
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             binding.pictureFlower.setImageURI(data?.data)
 
-            val bitmap = BitmapFactory.decodeStream(data?.data?.let { context?.contentResolver?.openInputStream(it) });
+            imagePath = data?.data
+            var imageToStore = MediaStore.Images.Media.getBitmap(context?.contentResolver, imagePath)
             val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val byteArray: ByteArray = baos.toByteArray()
 
+            imageToStore.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
-            image = byteArray
+            imageToStoreInArray = baos.toByteArray()
 
 
         }
