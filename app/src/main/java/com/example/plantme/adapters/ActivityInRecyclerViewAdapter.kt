@@ -1,0 +1,81 @@
+package com.example.plantme.adapters
+
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.plantme.R
+import com.example.plantme.TextInTextViewWithInfoSlovakAdapter
+import com.example.plantme.data.Databse
+import com.example.plantme.data.MyDao
+import com.example.plantme.data.entities.CareActivity
+import com.example.plantme.databinding.ItemActivityInRecyclerViewOverviewBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.runBlocking
+
+
+class ActivityInRecyclerViewAdapter(var activities: List<Int>, name: String)
+    : RecyclerView.Adapter<ActivityInRecyclerViewAdapter.ActivityInRecyclerViewHolder>() {
+        val name = name
+    private val WATER = 1
+    private val FERTILIZE = 2
+    private val REPOT = 3
+    private val CLEAN = 4
+
+    inner class ActivityInRecyclerViewHolder(val binding: ItemActivityInRecyclerViewOverviewBinding): RecyclerView.ViewHolder(binding.root) {
+    }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityInRecyclerViewHolder {
+            val binding =  ItemActivityInRecyclerViewOverviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ActivityInRecyclerViewHolder(binding)
+        }
+
+        override fun onBindViewHolder(holder: ActivityInRecyclerViewHolder, position: Int) {
+            val dao = holder.itemView.context?.let { Databse.getInstance(it).createDao() }
+
+            with(holder)
+            {
+                when (activities[position]) {
+                    WATER -> {binding.tvActivity.text = "Polievanie"
+                        binding.pictogram.setImageResource(R.drawable.water)
+                        inetmInRecyclerViewSetup(dao, binding.tvInfoAboutActivity, binding.pictogram, WATER) }
+                    FERTILIZE -> {binding.tvActivity.text = "Hnojenie"
+                        binding.pictogram.setImageResource(R.drawable.fertilise)
+                        inetmInRecyclerViewSetup(dao, binding.tvInfoAboutActivity, binding.pictogram, FERTILIZE) }
+                    REPOT -> {binding.tvActivity.text = "Presádzanie"
+                        binding.pictogram.setImageResource(R.drawable.repot)
+                        inetmInRecyclerViewSetup(dao, binding.tvInfoAboutActivity, binding.pictogram, REPOT) }
+                    CLEAN -> {binding.tvActivity.text = "Čistenie"
+                        binding.pictogram.setImageResource(R.drawable.clean)
+                        inetmInRecyclerViewSetup(dao, binding.tvInfoAboutActivity, binding.pictogram, CLEAN) }
+                }
+            }
+
+        }
+
+    private fun inetmInRecyclerViewSetup(dao: MyDao?, textView: TextView, imageView: ImageButton, type:Int) {
+        dao?.let { TextInTextViewWithInfoSlovakAdapter().getTextForInfo(it, textView, name, type) }
+        imageView.setOnClickListener {
+            val act = CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), name, type)
+            runBlocking { dao?.insertNewActivity(act) }}
+        textView.invalidate()
+    }
+
+    override fun getItemCount(): Int {
+            return activities.size
+        }
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -1,6 +1,6 @@
 package com.example.plantme.data.entities
 
-import android.graphics.Picture
+
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
