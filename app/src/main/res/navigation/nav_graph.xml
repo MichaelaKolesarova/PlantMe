@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/Home"
-        android:name="com.example.plantme.Home"
+        android:name="com.example.plantme.fragments.Home"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.plantme.FlowerOverview"
+        android:name="com.example.plantme.fragments.FlowerOverview"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_flower_overview">
 
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/addNewFlower"
-        android:name="com.example.plantme.AddNewFlower"
+        android:name="com.example.plantme.fragments.AddNewFlower"
         android:label="Pridať "
         tools:layout="@layout/fragment_add_new_flower">
         <action

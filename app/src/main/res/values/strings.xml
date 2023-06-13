@@ -11,4 +11,14 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="watering">zalievania</string>
+    <string name="fertilizing">hnojenia</string>
+    <string name="repoting">presádzania</string>
+    <string name="cleaning">čistenia</string>
+    <string name="upToNext">" do ďalšieho "</string>
+    <string name="ahead">" pozadu "</string>
+    <string name="todayIsNeededToBeTakenCare">dnes je nutné sa postarať</string>
+    <string name="one_day">" deň "</string>
+    <string name="two_to_four_days">" dni "</string>
+    <string name="more_than_five_days">" dní "</string>
 </resources>

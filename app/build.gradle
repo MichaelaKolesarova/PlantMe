@@ -74,6 +74,9 @@ dependencies {
     // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.5.3")
 
+    // notifications
+    implementation("androidx.core:core-ktx:1.6.0")
+
 
 
 
