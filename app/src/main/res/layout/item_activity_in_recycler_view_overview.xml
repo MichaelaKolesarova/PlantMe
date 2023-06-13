@@ -25,16 +25,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="info abouit watering"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_activity" />
 
     <ImageButton
         android:id="@+id/pictogram"
+        android:background="@drawable/only_roundstyle"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"

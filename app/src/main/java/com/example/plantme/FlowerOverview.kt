@@ -2,20 +2,21 @@ package com.example.plantme
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.plantme.data.Databse
 import com.example.plantme.data.entities.Flower
 import com.example.plantme.databinding.FragmentFlowerOverviewBinding
-import com.example.plantme.databinding.FragmentSecondBinding
 import kotlinx.coroutines.launch
+
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.runInterruptible
+
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -55,7 +56,7 @@ class FlowerOverview() : Fragment() {
             }
             binding.rvActivities.adapter = listOfActivities?.let { ActivityInRecyclerViewAdapter(it, flower.name) }
             binding.rvActivities.layoutManager = LinearLayoutManager(context)
-       }
+        }
 
         _binding = FragmentFlowerOverviewBinding.inflate(inflater, container, false)
 
@@ -74,6 +75,9 @@ class FlowerOverview() : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 
 
 

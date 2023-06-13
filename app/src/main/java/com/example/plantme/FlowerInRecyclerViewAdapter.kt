@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -55,12 +56,13 @@ class FlowerInRecyclerViewAdapter (
                 binding.tvType.text= flowersToShow[position].type
                 if (flowersToShow[position].picture != null) {
                     binding.pictureFlower.setImageBitmap(flowersToShow[position].picture?.let { BitmapFactory.decodeByteArray(flowersToShow[position].picture, 0, it.size) })
-                } else
-                {
+                } else {
                     binding.pictureFlower.setImageResource(R.drawable.ic_baseline_local_florist_24)
                 }
                 binding.pictogramWater.setOnClickListener {
                     val act = CareActivity(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), flowersToShow[position].name, 1)
+                    runBlocking { dao?.insertNewActivity(act)}
+                    notifyDataSetChanged()
                 }
                 dao?.let { getTextForInfo(it,binding.tvInfoAboutWatering, flowersToShow[position].name ) }
 
@@ -85,12 +87,8 @@ class FlowerInRecyclerViewAdapter (
                 val latestActivity = acts.maxBy { it.date }
                 val activityDate = LocalDateTime.parse(latestActivity.date, formatter)
                 val currentDate = LocalDateTime.now()
-                if (activityDate > currentDate)
-                {
-                    return@runBlocking ChronoUnit.DAYS.between(currentDate, activityDate).toInt()
-                } else {
-                    return@runBlocking ChronoUnit.DAYS.between(currentDate, activityDate).toInt().inv()
-                }
+
+                return@runBlocking ChronoUnit.DAYS.between(currentDate, activityDate).toInt()
             }
             else
             {
@@ -104,32 +102,37 @@ class FlowerInRecyclerViewAdapter (
     {
 
         runBlocking {
-            var frequency = 1
+            var frequency = dao.getSpecificFlower(name).watering_frequency
+
             var helpTextBefore = " do ďalšieho "
-            var helpTextAfter = " dní pozadu "
-            var helpTextToday = "o všetko postarné"
+            var helpTextAfter = " pozadu "
             helpTextBefore = helpTextBefore + "zalievania"
 
 
-            val daysToActivity = frequency - getdaysToDoActivityAgain(dao, name)
-            if (daysToActivity > 0) {
+            var daysToActivity = frequency + getdaysToDoActivityAgain(dao, name)
+            if (daysToActivity >= 0) {
                 if (daysToActivity == 0){
-                    textView.text = helpTextToday
+                    textView.text = "dnes je nutné kvet zaliať"
                 }
                 else if (daysToActivity == 1){
                     textView.text = daysToActivity.toString()+ " deň" + helpTextBefore
-                } else if (daysToActivity == 2) {
+                } else if (daysToActivity >= 2 && daysToActivity<= 4) {
                     textView.text = daysToActivity.toString() + " dni"+ helpTextBefore
-                } else if (daysToActivity > 0) {
+                } else  {
                     textView.text = daysToActivity.toString() + " dní" + helpTextBefore
                 }
             } else {
-                if (daysToActivity > -1){
-                    textView.text = daysToActivity.inv().toString() + helpTextAfter
+                daysToActivity++
+                if (daysToActivity == -1){
+                    textView.text = (-1*daysToActivity).toString() + " deň" + helpTextAfter
+                }else if (daysToActivity <= -2 && daysToActivity >= -4) {
+                    textView.text = (-1*daysToActivity).toString() + " dni" + helpTextAfter
+                }else if (daysToActivity == 0) {
+                    textView.text = "dnes je nutné kvet zaliať"
                 }
                 else
                 {
-                    textView.text = daysToActivity.inv().toString() + helpTextAfter
+                    textView.text = (-1*daysToActivity).toString() + helpTextAfter
                 }
                 textView.setTextColor(Color.RED)
             }

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment">
+            app:destination="@+id/SecondFragment">
             <argument
                 android:name="name"
                 app:argType="string" />
@@ -20,7 +20,7 @@
         </action>
         <action
             android:id="@+id/action_Home_to_addNewFlower"
-            app:destination="@id/addNewFlower"
+            app:destination="@+id/addNewFlower"
             app:popUpToInclusive="false" />
 
 
@@ -29,20 +29,22 @@
         android:id="@+id/SecondFragment"
         android:name="com.example.plantme.FlowerOverview"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_flower_overview">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/Home" />
     </fragment>
+
     <fragment
         android:id="@+id/addNewFlower"
         android:name="com.example.plantme.AddNewFlower"
-        android:label="Pridať" >
+        android:label="Pridať "
+        tools:layout="@layout/fragment_add_new_flower">
         <action
             android:id="@+id/action_addNewFlower_to_SecondFragment"
             app:destination="@id/SecondFragment"
-            app:popUpTo="@id/Home"
+            app:popUpTo="@+id/Home"
             app:popUpToInclusive="false">
             <argument
                 android:name="name"

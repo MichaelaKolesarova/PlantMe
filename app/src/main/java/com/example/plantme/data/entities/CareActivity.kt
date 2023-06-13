@@ -5,10 +5,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 
-@Entity(tableName = "CareActivity", primaryKeys = ["name", "date"])
+@Entity(tableName = "CareActivity", primaryKeys = ["name", "date", "activitytype"])
 
 data class CareActivity(
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "activitytype") val activitytype: Int?
+    @ColumnInfo(name = "activitytype") val activitytype: Int
 )
