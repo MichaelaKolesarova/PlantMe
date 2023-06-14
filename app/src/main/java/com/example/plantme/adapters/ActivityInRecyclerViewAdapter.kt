@@ -18,6 +18,11 @@ import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.runBlocking
 
 
+/**
+ * Adapter that manages behaviour of the recyclerView in Fragment [FloverOverview]
+ * sets type of activity and the need of the flower to be taken care of
+ * sets onClickListener on the pictogram to take care of the flower
+ */
 class ActivityInRecyclerViewAdapter(var activities: List<Int>, name: String)
     : RecyclerView.Adapter<ActivityInRecyclerViewAdapter.ActivityInRecyclerViewHolder>() {
         val name = name
@@ -26,14 +31,21 @@ class ActivityInRecyclerViewAdapter(var activities: List<Int>, name: String)
     private val REPOT = 3
     private val CLEAN = 4
 
-    inner class ActivityInRecyclerViewHolder(val binding: ItemActivityInRecyclerViewOverviewBinding): RecyclerView.ViewHolder(binding.root) {
-    }
-
+    /**
+     * initialisation of the holder
+     */
+    inner class ActivityInRecyclerViewHolder(val binding: ItemActivityInRecyclerViewOverviewBinding): RecyclerView.ViewHolder(binding.root) {}
+        /**
+         * pairing recyclerView with hte binding
+         */
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityInRecyclerViewHolder {
             val binding =  ItemActivityInRecyclerViewOverviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ActivityInRecyclerViewHolder(binding)
         }
-
+        /**
+         * setting text for info using pre-made functions that creates slovak sentence from [TextInTextViewWithInfoSlovakAdapter]
+         * setting onClickListener on Pictogram to take care of the flower
+         */
         override fun onBindViewHolder(holder: ActivityInRecyclerViewHolder, position: Int) {
             val context = holder.itemView.context
             val dao = holder.itemView.context?.let { Databse.getInstance(it).createDao() }
@@ -57,7 +69,9 @@ class ActivityInRecyclerViewAdapter(var activities: List<Int>, name: String)
             }
 
         }
-
+    /**
+     * setting text and on ClickListener
+     */
     private fun inetmInRecyclerViewSetup(dao: MyDao?, textView: TextView, imageView: ImageButton, type:Int, context: Context) {
         dao?.let { TextInTextViewWithInfoSlovakAdapter().getTextForInfo(it, textView, name, type, context) }
         imageView.setOnClickListener {

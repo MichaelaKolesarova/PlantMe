@@ -16,12 +16,21 @@ import com.example.plantme.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * A simple subclass as the default destination in the navigation.
+ * Fragment Home helds the list of all owned flowers in Recycler view
+ * Posiibiloty to to navigate to the info about specific florew or add new flower
+ * initialises the adapter for the recycler vie that shows all of the flowers
  */
 class Home : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * dao is called from database instance
+     * binding is specified
+     * adapter of RecyclerView is attached
+     * clic handling calls navigations to change fragments
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val dao = context?.let { Databse.getInstance(it).createDao() }
         _binding = FragmentHomeBinding.inflate(inflater, container, false)

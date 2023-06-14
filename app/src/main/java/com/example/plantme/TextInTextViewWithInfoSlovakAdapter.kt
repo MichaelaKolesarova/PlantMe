@@ -11,8 +11,13 @@ import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-
+/**
+ * Class communicating with database to create right text in right dorm about next time to do CareActivity
+ */
 class TextInTextViewWithInfoSlovakAdapter {
+    /**
+     * function counts the difference between current date and the date when ws the activity done the last tme
+     */
      fun getdaysToDoActivityAgain(dao: MyDao, name: String, type:Int): Int
     {
         return runBlocking {
@@ -33,6 +38,11 @@ class TextInTextViewWithInfoSlovakAdapter {
         }
     }
 
+    /**
+     * function counts how many days until the activity should be performed again and
+     * if daysToGetActivity is negative (means we should have already done the activity, text is Red
+     * creates the Slovak sentence
+     */
      fun getTextForInfo(dao: MyDao, textView: TextView, name:String, type: Int, context: Context)
 
     {runBlocking {

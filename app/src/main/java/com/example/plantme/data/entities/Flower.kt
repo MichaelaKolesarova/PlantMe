@@ -5,7 +5,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
+/**
+ * Data class represneting a flower, which is a content of the table "flower" in database Database.db
+ * variable Picture is not manadatory
+ * name is the primary key of the Flower
+ */
 @Entity(tableName = "Flower")
 data class Flower(
     @PrimaryKey val name: String,

@@ -4,6 +4,9 @@ import androidx.room.*
 import com.example.plantme.data.entities.CareActivity
 import com.example.plantme.data.entities.Flower
 
+/**
+ * Query library to communicate with the database to avoid using string messages
+ */
 @Dao
 interface MyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

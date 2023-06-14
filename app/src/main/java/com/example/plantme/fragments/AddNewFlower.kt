@@ -24,7 +24,8 @@ import java.time.format.DateTimeFormatter
 
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple odf Fragment subclass as the second destination in the navigation.
+ * Fragment to get users info about the new flower
  */
 class AddNewFlower() : Fragment() {
 
@@ -35,7 +36,12 @@ class AddNewFlower() : Fragment() {
 
     private var _binding: FragmentAddNewFlowerBinding? = null
     private val binding get() = _binding!!
-
+    /**
+     * COLLECTS INFO ABOUT USER'S INOPUT
+     * creates intent to chose a picture from photo album and sets it as a picture of the flower
+     * if the picture is presnet, uses the saved picturem if not, uses default pictogram
+     * prevents user from saving the flower with the already used name (via Toast)
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAddNewFlowerBinding.inflate(inflater, container, false)
         val dao = context?.let { Databse.getInstance(it).createDao() }
@@ -67,6 +73,11 @@ class AddNewFlower() : Fragment() {
         return binding.root
     }
 
+    /**
+     * response for the chosing the picture of flower
+     * seting pisture in the view as chosen picture and preparing the picture in the needed way
+     * (ByteArray) to be saved
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){

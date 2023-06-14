@@ -16,20 +16,34 @@ import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * Adapter that manages behaviour of the recyclerView in Fragment [Home]
+ * sets name, type and the need of the flower to be watered
+ * sets onClickListener on the pictogram to water the flower
+ * sets onClickListener on the recyclerViewItemn to water the flower
+ */
 class FlowerInRecyclerViewAdapter (
     var flowersToShow: List<Flower>,
     ): RecyclerView.Adapter<FlowerInRecyclerViewAdapter.FlowerInRecyclerViewHolder>() {
     private val WATER = 1
+        /**
+         * initialisation of the holder
+         */
         inner class FlowerInRecyclerViewHolder(val binding: ItemFlowerInRecyclerViewHomeBinding): RecyclerView.ViewHolder(binding.root) {
-
         }
-
+        /**
+         * pairing recyclerView with hte binding
+         */
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlowerInRecyclerViewHolder {
             val binding =  ItemFlowerInRecyclerViewHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return FlowerInRecyclerViewHolder(binding)
         }
 
-
+        /**
+         * seting on Click listeners to open the [FlowerOverview]
+         * setting text for info using pre-made functions that creates slovak sentence from [TextInTextViewWithInfoSlovakAdapter]
+         * setting onClickListener on Pictogram to water the flower
+         */
         override fun onBindViewHolder(holder: FlowerInRecyclerViewHolder, position: Int) {
             val dao = holder.itemView.context?.let { Databse.getInstance(it).createDao() }
             with(holder)

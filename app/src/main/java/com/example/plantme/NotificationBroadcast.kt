@@ -11,8 +11,14 @@ import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
-
+/**
+ * Communication Between system and notification reaction
+ */
 class NotificationBroadcast(): BroadcastReceiver() {
+    /**
+     * creates form of the notification
+     * sets Main Activity as the activity to be opened after clicking on the notification
+     */
     override fun onReceive(context: Context, intent: Intent?) {
         val repeating_Intent = Intent(context, MainActivity::class.java)
         repeating_Intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

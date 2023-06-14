@@ -10,10 +10,13 @@ import com.example.plantme.data.entities.Flower
 @Database(
     entities = [
         Flower::class,
-        CareActivity::class
-    ],
-    version = 1,
-)
+        CareActivity::class],
+    version = 1,)
+
+/**
+ * Class Database representation Copying pre-filled database  using Room
+ * One instance - singelton of database and dao is created
+ */
 abstract class Databse: RoomDatabase() {
     abstract fun  createDao(): MyDao
 
