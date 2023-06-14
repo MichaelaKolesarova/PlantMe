@@ -18,7 +18,7 @@ class TextInTextViewWithInfoSlovakAdapter {
     /**
      * function counts the difference between current date and the date when ws the activity done the last tme
      */
-     fun getdaysToDoActivityAgain(dao: MyDao, name: String, type:Int): Int
+     private fun getdaysToDoActivityAgain(dao: MyDao, name: String, type:Int): Int
     {
         return runBlocking {
             val acts = dao.getSpecificActivities(name, type)

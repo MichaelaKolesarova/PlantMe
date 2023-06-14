@@ -2,9 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.plantme.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/notification"
+        android:title=""
+        app:actionLayout="@layout/pictogram_notification"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/app_bar_switch"
+        android:title=""
+        app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
+        app:showAsAction="always"/>
+
 </menu>

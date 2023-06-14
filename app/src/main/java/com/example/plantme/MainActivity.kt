@@ -8,12 +8,14 @@ import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.plantme.databinding.ActivityMainBinding
 import java.util.*
+
 
 /**
  * Activity Class with frame that helds all of the fragments and notification management
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private var notificationAllowed = true
 
     /**
      * function sets fragment Home as the first fragment to be shown and initiates the
@@ -49,29 +52,33 @@ class MainActivity : AppCompatActivity() {
 
         val calendar: Calendar = Calendar.getInstance()
         calendar.setTimeInMillis(System.currentTimeMillis())
-        calendar.set(Calendar.HOUR_OF_DAY, 7)
-        calendar.set(Calendar.MINUTE, 20)
+        calendar.set(Calendar.HOUR_OF_DAY, 10)
+        calendar.set(Calendar.MINUTE, 30)
         calendar.set(Calendar.SECOND, 0)
         if (Calendar.getInstance().after(calendar))
         {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 
-        val intent = Intent(this@MainActivity, NotificationBroadcast::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+        if (notificationAllowed)
+        {
+            val intent = Intent(this@MainActivity, NotificationBroadcast::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY,
-            pendingIntent)
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY,
+                pendingIntent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                pendingIntent
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    pendingIntent
+                )
+            }
         }
+
     }
 
     /**
@@ -79,6 +86,14 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        val switch: SwitchCompat =  menu.findItem(R.id.app_bar_switch).actionView as SwitchCompat;
+        switch.setOnCheckedChangeListener { compoundButton, b ->
+            notificationAllowed = b
+            val editor = getSharedPreferences("com.example.srushtee.dummy", MODE_PRIVATE).edit()
+            editor.putBoolean("service_status", switch.isChecked())
+            editor.commit()
+        }
+
         return true
     }
 
@@ -89,7 +104,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            //R.id. -> true
             else -> super.onOptionsItemSelected(item)
         }
     }

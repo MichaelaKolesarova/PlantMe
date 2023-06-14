@@ -42,7 +42,13 @@ class Home : Fragment() {
             findNavController().navigate(R.id.action_Home_to_addNewFlower)
         }
         lifecycleScope.launch {
-            var flowers = dao?.getAllFlowers()
+            val flowers = dao?.getAllFlowers()
+            if (flowers.isNullOrEmpty())
+            {
+                binding.tvHomeWelcome.text = getString(R.string.add_flower)
+            } else {
+                binding.tvHomeWelcome.text = getString(R.string.check_flowers)
+            }
             binding.rvFlowers.adapter = flowers?.let { FlowerInRecyclerViewAdapter(it) }
             binding.rvFlowers.layoutManager = LinearLayoutManager(this@Home.context)
         }
